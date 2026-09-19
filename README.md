@@ -1,4 +1,4 @@
-# lab1
+# aerolineaVirtual
 
 This application was generated using JHipster 9.2.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v9.2.0](https://www.jhipster.tech/documentation-archive/v9.2.0).
 
@@ -88,7 +88,7 @@ For further instructions on how to develop with JHipster, have a look at [Using 
 
 ### Packaging as jar
 
-To build the final jar and optimize the lab1 application for production, run:
+To build the final jar and optimize the aerolineaVirtual application for production, run:
 
 ```bash
 ./mvnw -Pprod clean verify
@@ -242,3 +242,6 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 - [Jest](https://jestjs.io)
 - [Leaflet](https://leafletjs.com/)
 - [DefinitelyTyped](https://definitelytyped.org/)
+  #   F S I _ l a b s 
+   
+   

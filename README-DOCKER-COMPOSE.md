@@ -3,6 +3,7 @@
 ## Usage
 
 Launch all your infrastructure by running: `docker compose up -d`.
+and then use : `docker-compose -f src/main/docker/app.yml up -d`.
 
 ## Configured Docker services
 

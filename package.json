@@ -1,8 +1,8 @@
 {
-  "name": "lab-1",
+  "name": "aerolinea-virtual",
   "version": "0.0.1-SNAPSHOT",
   "private": true,
-  "description": "Description for Lab 1",
+  "description": "Description for Aerolinea Virtual",
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {

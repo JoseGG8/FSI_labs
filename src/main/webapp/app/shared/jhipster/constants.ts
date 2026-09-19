@@ -1,6 +1,6 @@
-export const MESSAGE_ALERT_HEADER_NAME = 'x-lab1app-alert';
-export const MESSAGE_ERROR_HEADER_NAME = 'x-lab1app-error';
-export const MESSAGE_PARAM_HEADER_NAME = 'x-lab1app-params';
+export const MESSAGE_ALERT_HEADER_NAME = 'x-aerolineavirtualapp-alert';
+export const MESSAGE_ERROR_HEADER_NAME = 'x-aerolineavirtualapp-error';
+export const MESSAGE_PARAM_HEADER_NAME = 'x-aerolineavirtualapp-params';
 
 export const AUTHENTICATION_TOKEN_KEY = 'jhi-authenticationToken';
 

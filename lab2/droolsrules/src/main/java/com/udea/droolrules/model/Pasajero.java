@@ -26,7 +26,7 @@ public class Pasajero {
     @Min(value = 0, message = "Los puntos de lealtad no pueden ser negativos")
     private int puntosLealtad;
 
-    private boolean elegibleAscensos;
+    private boolean elegibleAscensos = true;
 
     @NotNull(message = "La preferencia de asiento es obligatoria")
     private PreferenciaAsiento preferenciaAsiento;
@@ -34,12 +34,14 @@ public class Pasajero {
     @PositiveOrZero(message = "El saldo a favor no puede ser negativo")
     private double saldoFavor;
 
+    private boolean viajaConNinos;
+
     public Pasajero() {
     }
 
     public Pasajero(Long id, String documentoIdentidad, String nombre, int edad, TipoPasajero tipo,
                     int puntosLealtad, boolean elegibleAscensos, PreferenciaAsiento preferenciaAsiento,
-                    double saldoFavor) {
+                    double saldoFavor, boolean viajaConNinos) {
         this.id = id;
         this.documentoIdentidad = documentoIdentidad;
         this.nombre = nombre;
@@ -49,6 +51,7 @@ public class Pasajero {
         this.elegibleAscensos = elegibleAscensos;
         this.preferenciaAsiento = preferenciaAsiento;
         this.saldoFavor = saldoFavor;
+        this.viajaConNinos = viajaConNinos;
     }
 
     public Long getId() {
@@ -121,5 +124,13 @@ public class Pasajero {
 
     public void setSaldoFavor(double saldoFavor) {
         this.saldoFavor = saldoFavor;
+    }
+
+    public boolean isViajaConNinos() {
+        return viajaConNinos;
+    }
+
+    public void setViajaConNinos(boolean viajaConNinos) {
+        this.viajaConNinos = viajaConNinos;
     }
 }

@@ -8,14 +8,23 @@ import java.time.LocalDateTime;
  */
 public class CheckInResponse {
 
-    private boolean exitoso;
+    private boolean exitoso = true;
     private Asiento asientoAsignado;
-    private double costoAdicional;
+    private double costoAdicional = 0.0;
     private boolean ascensoOtorgado;
     private String nuevaClase;
     private String grupoAbordaje;
     private LocalDateTime horaAbordaje;
-    private String mensaje;
+    private String mensaje = "";
+
+    // Campos para almacenar resultados de las reglas de negocio
+    private boolean checkInPrioritario;
+    private double porcentajeDescuento = 0.0;
+    private double compensacion = 0.0;
+    private int puntosLealtadGanados = 0;
+    private boolean equipajePermitido = true;
+    private boolean accesoSalonVip;
+    private boolean asientoPreferencialFamilia;
 
     public CheckInResponse() {
     }
@@ -95,5 +104,69 @@ public class CheckInResponse {
 
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
+    }
+
+    public void agregarMensaje(String nuevoMensaje) {
+        if (this.mensaje == null || this.mensaje.isBlank()) {
+            this.mensaje = nuevoMensaje;
+        } else {
+            this.mensaje += " | " + nuevoMensaje;
+        }
+    }
+
+    public boolean isCheckInPrioritario() {
+        return checkInPrioritario;
+    }
+
+    public void setCheckInPrioritario(boolean checkInPrioritario) {
+        this.checkInPrioritario = checkInPrioritario;
+    }
+
+    public double getPorcentajeDescuento() {
+        return porcentajeDescuento;
+    }
+
+    public void setPorcentajeDescuento(double porcentajeDescuento) {
+        this.porcentajeDescuento = porcentajeDescuento;
+    }
+
+    public double getCompensacion() {
+        return compensacion;
+    }
+
+    public void setCompensacion(double compensacion) {
+        this.compensacion = compensacion;
+    }
+
+    public int getPuntosLealtadGanados() {
+        return puntosLealtadGanados;
+    }
+
+    public void setPuntosLealtadGanados(int puntosLealtadGanados) {
+        this.puntosLealtadGanados = puntosLealtadGanados;
+    }
+
+    public boolean isEquipajePermitido() {
+        return equipajePermitido;
+    }
+
+    public void setEquipajePermitido(boolean equipajePermitido) {
+        this.equipajePermitido = equipajePermitido;
+    }
+
+    public boolean isAccesoSalonVip() {
+        return accesoSalonVip;
+    }
+
+    public void setAccesoSalonVip(boolean accesoSalonVip) {
+        this.accesoSalonVip = accesoSalonVip;
+    }
+
+    public boolean isAsientoPreferencialFamilia() {
+        return asientoPreferencialFamilia;
+    }
+
+    public void setAsientoPreferencialFamilia(boolean asientoPreferencialFamilia) {
+        this.asientoPreferencialFamilia = asientoPreferencialFamilia;
     }
 }

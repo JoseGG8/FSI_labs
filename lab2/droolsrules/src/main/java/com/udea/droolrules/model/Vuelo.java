@@ -2,6 +2,7 @@ package com.udea.droolrules.model;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class Vuelo {
@@ -21,15 +22,22 @@ public class Vuelo {
     @NotNull(message = "La fecha y hora estimada de llegada es obligatoria")
     private LocalDateTime horaLlegada;
 
+    private int minutosRetraso;
+
+    private double duracionHoras;
+
     public Vuelo() {
     }
 
-    public Vuelo(String codigo, String origen, String destino, LocalDateTime fechaHoraSalida, LocalDateTime horaLlegada) {
+    public Vuelo(String codigo, String origen, String destino, LocalDateTime fechaHoraSalida,
+                 LocalDateTime horaLlegada, int minutosRetraso, double duracionHoras) {
         this.codigo = codigo;
         this.origen = origen;
         this.destino = destino;
         this.fechaHoraSalida = fechaHoraSalida;
         this.horaLlegada = horaLlegada;
+        this.minutosRetraso = minutosRetraso;
+        this.duracionHoras = duracionHoras;
     }
 
     public String getCodigo() {
@@ -62,6 +70,7 @@ public class Vuelo {
 
     public void setFechaHoraSalida(LocalDateTime fechaHoraSalida) {
         this.fechaHoraSalida = fechaHoraSalida;
+        recalcularDuracionSiAplica();
     }
 
     public LocalDateTime getHoraLlegada() {
@@ -70,5 +79,31 @@ public class Vuelo {
 
     public void setHoraLlegada(LocalDateTime horaLlegada) {
         this.horaLlegada = horaLlegada;
+        recalcularDuracionSiAplica();
+    }
+
+    public int getMinutosRetraso() {
+        return minutosRetraso;
+    }
+
+    public void setMinutosRetraso(int minutosRetraso) {
+        this.minutosRetraso = minutosRetraso;
+    }
+
+    public double getDuracionHoras() {
+        if (duracionHoras <= 0 && fechaHoraSalida != null && horaLlegada != null) {
+            return Duration.between(fechaHoraSalida, horaLlegada).toMinutes() / 60.0;
+        }
+        return duracionHoras;
+    }
+
+    public void setDuracionHoras(double duracionHoras) {
+        this.duracionHoras = duracionHoras;
+    }
+
+    private void recalcularDuracionSiAplica() {
+        if (fechaHoraSalida != null && horaLlegada != null && duracionHoras <= 0) {
+            this.duracionHoras = Duration.between(fechaHoraSalida, horaLlegada).toMinutes() / 60.0;
+        }
     }
 }

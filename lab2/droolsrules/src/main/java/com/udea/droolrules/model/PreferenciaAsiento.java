@@ -4,6 +4,7 @@ public enum PreferenciaAsiento {
     VENTANA,
     PASILLO,
     CENTRAL,
+    ANY,
     CUALQUIERA,
     FAMILIAR
 }

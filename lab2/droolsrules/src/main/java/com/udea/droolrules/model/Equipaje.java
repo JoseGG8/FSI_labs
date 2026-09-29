@@ -16,6 +16,8 @@ public class Equipaje {
 
     private boolean checkedIn;
 
+    private boolean permitido = true;
+
     @Valid
     private Vuelo vuelo;
 
@@ -25,11 +27,12 @@ public class Equipaje {
     public Equipaje() {
     }
 
-    public Equipaje(Long id, double peso, String tipo, boolean checkedIn, Vuelo vuelo, Pasajero pasajero) {
+    public Equipaje(Long id, double peso, String tipo, boolean checkedIn, boolean permitido, Vuelo vuelo, Pasajero pasajero) {
         this.id = id;
         this.peso = peso;
         this.tipo = tipo;
         this.checkedIn = checkedIn;
+        this.permitido = permitido;
         this.vuelo = vuelo;
         this.pasajero = pasajero;
     }
@@ -64,6 +67,14 @@ public class Equipaje {
 
     public void setCheckedIn(boolean checkedIn) {
         this.checkedIn = checkedIn;
+    }
+
+    public boolean isPermitido() {
+        return permitido;
+    }
+
+    public void setPermitido(boolean permitido) {
+        this.permitido = permitido;
     }
 
     public Vuelo getVuelo() {

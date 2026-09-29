@@ -20,15 +20,22 @@ public class Asiento {
 
     private boolean ocupado;
 
+    private boolean salidaEmergencia;
+
+    private boolean preferencialFamilia;
+
     public Asiento() {
     }
 
-    public Asiento(String fila, String columna, PreferenciaAsiento preferencia, Vuelo vuelo, boolean ocupado) {
+    public Asiento(String fila, String columna, PreferenciaAsiento preferencia, Vuelo vuelo,
+                   boolean ocupado, boolean salidaEmergencia, boolean preferencialFamilia) {
         this.fila = fila;
         this.columna = columna;
         this.preferencia = preferencia;
         this.vuelo = vuelo;
         this.ocupado = ocupado;
+        this.salidaEmergencia = salidaEmergencia;
+        this.preferencialFamilia = preferencialFamilia;
     }
 
     public String getFila() {
@@ -69,6 +76,22 @@ public class Asiento {
 
     public void setOcupado(boolean ocupado) {
         this.ocupado = ocupado;
+    }
+
+    public boolean isSalidaEmergencia() {
+        return salidaEmergencia;
+    }
+
+    public void setSalidaEmergencia(boolean salidaEmergencia) {
+        this.salidaEmergencia = salidaEmergencia;
+    }
+
+    public boolean isPreferencialFamilia() {
+        return preferencialFamilia;
+    }
+
+    public void setPreferencialFamilia(boolean preferencialFamilia) {
+        this.preferencialFamilia = preferencialFamilia;
     }
 
     /**

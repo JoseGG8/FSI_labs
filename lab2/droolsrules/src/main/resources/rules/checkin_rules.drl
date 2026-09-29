@@ -1,0 +1,169 @@
+package rules
+
+import com.udea.droolrules.model.CheckInRequest
+import com.udea.droolrules.model.CheckInResponse
+import com.udea.droolrules.model.Pasajero
+import com.udea.droolrules.model.TipoPasajero
+import com.udea.droolrules.model.PreferenciaAsiento
+import com.udea.droolrules.model.Equipaje
+import com.udea.droolrules.model.Vuelo
+import com.udea.droolrules.model.Asiento
+import com.udea.droolrules.model.TicketCompraVuelo
+
+// =========================================================================
+// REGLA 4: DenyUpgradeForOverweightLuggage (Salience alto para ejecutarse antes del ascenso)
+// Condición: Equipaje mayor a 23 kg.
+// Acción: Marcar al pasajero como no elegible para ascensos.
+// =========================================================================
+rule "DenyUpgradeForOverweightLuggage"
+    salience 20
+    when
+        $equipaje : Equipaje(peso > 23.0)
+        $pasajero : Pasajero(elegibleAscensos == true)
+        $response : CheckInResponse()
+    then
+        modify($pasajero) {
+            setElegibleAscensos(false)
+        };
+        $response.setAscensoOtorgado(false);
+        $response.agregarMensaje("Pasajero no elegible para ascensos debido a sobrepeso de equipaje (>23 kg).");
+end
+
+// =========================================================================
+// REGLA 1: UpgradeToBusinessClassForFrequentFlyersWithDelays
+// Condición: Pasajero con estatus "Gold" o "Platinum", elegible a ascensos y un vuelo con más de 60 minutos de retraso.
+// Acción: Ascenso a clase ejecutiva.
+// =========================================================================
+rule "UpgradeToBusinessClassForFrequentFlyersWithDelays"
+    salience 10
+    when
+        $pasajero : Pasajero(tipo == TipoPasajero.GOLD || tipo == TipoPasajero.PLATINUM, elegibleAscensos == true)
+        $vuelo    : Vuelo(minutosRetraso > 60)
+        $response : CheckInResponse()
+    then
+        $response.setAscensoOtorgado(true);
+        $response.setNuevaClase("BUSINESS");
+        $response.agregarMensaje("Ascenso a clase ejecutiva concedido por estatus frecuente y retraso superior a 60 minutos.");
+end
+
+// =========================================================================
+// REGLA 2: PriorityCheckInForSeniors
+// Condición: Pasajero mayor de 65 años.
+// Acción: Activar check-in prioritario.
+// =========================================================================
+rule "PriorityCheckInForSeniors"
+    when
+        $pasajero : Pasajero(edad > 65)
+        $response : CheckInResponse()
+    then
+        $response.setCheckInPrioritario(true);
+        $response.setGrupoAbordaje("Grupo 1 - Prioritario Adulto Mayor");
+        $response.agregarMensaje("Check-in prioritario activado para pasajero adulto mayor.");
+end
+
+// =========================================================================
+// REGLA 3: DiscountForLightLuggage
+// Condición: Equipaje menor a 10 kg.
+// Acción: Aplicar un descuento del 10%.
+// =========================================================================
+rule "DiscountForLightLuggage"
+    when
+        $equipaje : Equipaje(peso < 10.0)
+        $response : CheckInResponse()
+    then
+        $response.setPorcentajeDescuento(10.0);
+        $response.agregarMensaje("Descuento del 10% aplicado por viajar con equipaje ligero (<10 kg).");
+end
+
+// =========================================================================
+// REGLA 5: AssignEmergencyExitSeatToYoungAdults
+// Condición: Pasajero entre 18 y 40 años con preferencia de asiento "Any" y un asiento de salida de emergencia disponible.
+// Acción: Asignar el asiento de salida de emergencia y marcarlo como ocupado.
+// =========================================================================
+rule "AssignEmergencyExitSeatToYoungAdults"
+    when
+        $pasajero : Pasajero(edad >= 18, edad <= 40, preferenciaAsiento == PreferenciaAsiento.ANY || preferenciaAsiento == PreferenciaAsiento.CUALQUIERA)
+        $asiento  : Asiento(salidaEmergencia == true, ocupado == false)
+        $response : CheckInResponse()
+    then
+        $asiento.setOcupado(true);
+        $response.setAsientoAsignado($asiento);
+        $response.agregarMensaje("Asiento en salida de emergencia " + $asiento.getCodigoAsiento() + " asignado a adulto joven.");
+end
+
+// =========================================================================
+// REGLA 6: CompensationForExtremeDelays
+// Condición: Vuelo con retraso mayor a 180 minutos (3 horas).
+// Acción: Otorga una compensación de $200 al pasajero.
+// =========================================================================
+rule "CompensationForExtremeDelays"
+    when
+        $vuelo    : Vuelo(minutosRetraso > 180)
+        $pasajero : Pasajero()
+        $response : CheckInResponse()
+    then
+        $pasajero.setSaldoFavor($pasajero.getSaldoFavor() + 200.0);
+        $response.setCompensacion(200.0);
+        $response.agregarMensaje("Compensación de $200 otorgada al saldo a favor por retraso extremo del vuelo (>180 min).");
+end
+
+// =========================================================================
+// REGLA 7: ExtraLoyaltyPointsForLongFlights
+// Condición: Pasajero con membresía distinta a "Basic" en un vuelo de más de 5 horas.
+// Acción: Agrega 500 puntos de lealtad.
+// =========================================================================
+rule "ExtraLoyaltyPointsForLongFlights"
+    when
+        $pasajero : Pasajero(tipo != TipoPasajero.BASIC)
+        $vuelo    : Vuelo(duracionHoras > 5.0)
+        $response : CheckInResponse()
+    then
+        $pasajero.setPuntosLealtad($pasajero.getPuntosLealtad() + 500);
+        $response.setPuntosLealtadGanados(500);
+        $response.agregarMensaje("500 puntos de lealtad extra otorgados por vuelo de larga duración (>5 horas).");
+end
+
+// =========================================================================
+// REGLA 8: RestrictLuggageOnShortFlights
+// Condición: Equipaje mayor a 15 kg en un vuelo de menos de 2 horas.
+// Acción: Marca el equipaje como no permitido.
+// =========================================================================
+rule "RestrictLuggageOnShortFlights"
+    when
+        $equipaje : Equipaje(peso > 15.0)
+        $vuelo    : Vuelo(duracionHoras < 2.0)
+        $response : CheckInResponse()
+    then
+        $equipaje.setPermitido(false);
+        $response.setEquipajePermitido(false);
+        $response.setExitoso(false);
+        $response.agregarMensaje("Equipaje superior a 15 kg NO permitido en vuelos cortos (<2 horas).");
+end
+
+// =========================================================================
+// REGLA 9: VipLoungeAccessForPlatinumMembers
+// Condición: Pasajero con membresía "Platinum".
+// Acción: Otorga acceso al salón VIP.
+// =========================================================================
+rule "VipLoungeAccessForPlatinumMembers"
+    when
+        $pasajero : Pasajero(tipo == TipoPasajero.PLATINUM)
+        $response : CheckInResponse()
+    then
+        $response.setAccesoSalonVip(true);
+        $response.agregarMensaje("Acceso prioritario concedido al salón VIP por membresía Platinum.");
+end
+
+// =========================================================================
+// REGLA 10: PreferentialSeatForFamilies
+// Condición: Pasajero viajando con niños y sin preferencia específica de asiento ("Any").
+// Acción: Asigna un asiento preferencial para familias.
+// =========================================================================
+rule "PreferentialSeatForFamilies"
+    when
+        $pasajero : Pasajero(viajaConNinos == true, preferenciaAsiento == PreferenciaAsiento.ANY || preferenciaAsiento == PreferenciaAsiento.CUALQUIERA || preferenciaAsiento == PreferenciaAsiento.FAMILIAR)
+        $response : CheckInResponse()
+    then
+        $response.setAsientoPreferencialFamilia(true);
+        $response.agregarMensaje("Asiento preferencial asignado para viajar en familia con niños.");
+end

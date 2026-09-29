@@ -1,0 +1,18 @@
+name: aerolineavirtual
+services:
+  mysql:
+    image: mysql:8.0.33
+    volumes:
+      - ./config/mysql:/etc/mysql/conf.d:ro
+    environment:
+      - MYSQL_DATABASE=aerolineavirtual
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_PASSWORD=Volix100pre.
+    ports:
+      - 127.0.0.1:3306:3306
+    command: mysqld --lower_case_table_names=1 --skip-mysqlx --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+    healthcheck:
+      test: ['CMD-SHELL', 'mysqladmin ping -h localhost -u root -pVolix100pre. || exit 1']
+      interval: 5s
+      timeout: 5s
+      retries: 20

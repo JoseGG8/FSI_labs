@@ -1,0 +1,42 @@
+services:
+  aerolineavirtual:
+    image: aerolineavirtual
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=dev,api-docs
+      - MANAGEMENT_PROMETHEUS_METRICS_EXPORT_ENABLED=true
+      - SPRING_DATASOURCE_URL=jdbc:mysql://aerolineavirtual-mysql:3306/aerolineavirtual?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=Volix100pre.
+      - SPRING_LIQUIBASE_URL=jdbc:mysql://aerolineavirtual-mysql:3306/aerolineavirtual?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
+    ports:
+      - 8080:8080
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - "bash -c 'exec 3<>/dev/tcp/127.0.0.1/8080; printf \"GET /management/health HTTP/1.0\\r\\nHost: localhost\\r\\n\\r\\n\" >&3; grep -q \"\\\"status\\\":\\\"UP\\\"\" <&3'"
+      interval: 5s
+      timeout: 5s
+      retries: 40
+    depends_on:
+      aerolineavirtual-mysql:
+        condition: service_healthy
+  aerolineavirtual-mysql:
+    image: mysql:9.7.1
+    volumes:
+      - ./config/mysql:/etc/mysql/conf.d:ro
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=aerolineavirtual
+      - MYSQL_ROOT_HOST=aerolineavirtual
+      - MYSQL_ROOT_PASSWORD=Volix100pre.
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=Volix100pre.
+    command: mysqld --lower_case_table_names=1 --skip-mysqlx --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - mysql -e "SHOW DATABASES;" && sleep 5
+      interval: 5s
+      timeout: 10s
+      retries: 10

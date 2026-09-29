@@ -1,0 +1,32 @@
+# This configuration is intended for development purpose, it's **your** responsibility to harden it for production
+name: aerolineavirtual
+services:
+  app:
+    image: aerolineavirtual
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=prod,api-docs
+      - JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET=NmY3ZDhhYjA0MGY3YjM2NWU4MWNhMTM2MDY5ZjA3YjE2MzE0Y2Y0YjgwNTFmOTk4OGZjOTUzYzRkMDJiN2E0YmM4ZTMxZDViY2ExMDVjYTRlZjA2YzdiNDVlMWE4YTZhMWExMWJiNWQ3YWY2ZTBjZWM5NWJhNWQ4YTI1MDc0MGM=
+      - MANAGEMENT_PROMETHEUS_METRICS_EXPORT_ENABLED=true
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/aerolineavirtual?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=Volix100pre.
+      - SPRING_LIQUIBASE_URL=jdbc:mysql://mysql:3306/aerolineavirtual?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
+    ports:
+      - 127.0.0.1:8080:8080
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - "bash -c 'exec 3<>/dev/tcp/127.0.0.1/8080; printf \"GET
+          /management/health HTTP/1.0\\r\\nHost: localhost\\r\\n\\r\\n\" >&3;
+          grep -q \"\\\"status\\\":\\\"UP\\\"\" <&3'"
+      interval: 5s
+      timeout: 5s
+      retries: 40
+    depends_on:
+      mysql:
+        condition: service_healthy
+  mysql:
+    extends:
+      file: ./mysql.yml
+      service: mysql

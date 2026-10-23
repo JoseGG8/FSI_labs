@@ -89,7 +89,7 @@ Inicialmente, ambas reglas se activaban simultáneamente en la agenda de Drools 
 
 * **API REST Funcional:** La aplicación expone el endpoint `POST /api/checkin` listo para procesar solicitudes JSON y retornar el objeto `CheckInResponse` con todas las decisiones consolidadas.
 
-### Conclusiones del Estudiante
+### Conclusiones
 1. **Separación de Responsabilidades:** Utilizar Drools permite que las reglas de negocio vivan en archivos `.drl` independientes. El código Java se mantiene enfocado en orquestar el flujo y validar la estructura de los datos, mientras que las reglas se concentran exclusivamente en el *qué* y el *cuándo*.
 2. **Potencia de la Memoria de Trabajo:** Drools no es un simple evaluador de condiciones lineales; su capacidad de encadenamiento de hechos mediante `modify` y `insert` permite que unas reglas reaccionen dinámicamente a las decisiones tomadas por otras.
 3. **Importancia del Desacoplamiento:** Diseñar DTOs limpios sin acoplar las clases del dominio a anotaciones o interfaces específicas de Drools garantiza que la arquitectura sea extensible, fácilmente testeable y adaptable a otros frameworks si el negocio lo requiere.

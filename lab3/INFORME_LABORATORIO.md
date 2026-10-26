@@ -17,7 +17,7 @@
 
 En el contexto actual de la ingeniería de software, la convergencia entre modelos de lenguaje avanzados (LLMs) y flujos de trabajo asistidos por inteligencia artificial ha dado origen al paradigma de **Vibecoding**. Esta metodología transforma el rol del desarrollador: en lugar de escribir cada línea de código de forma manual y repetitiva, el ingeniero actúa como director de orquesta y arquitecto, iterando mediante lenguaje natural, validando componentes en tiempo real y refinando prototipos funcionales de alto impacto visual y funcional.
 
-En la presente práctica de laboratorio se abordó el diseño, desarrollo e integración completa de un **Dashboard CRM Comercial y de Revenue Management para una Aerolínea Internacional (AeroLink)**. Como estudiante, asumí el desafío de construir una solución de software orientada a la toma ágil de decisiones de directores comerciales (*Chief Commercial Officer*) y gestores de rutas (*Route Managers*). La experiencia integró la adopción de un diseño premium tomado de la plataforma **Dribbble**, la construcción reactiva de la interfaz apoyada en los modelos de inteligencia artificial disponibles en el entorno **Antigravity**, y la conexión con un backend inteligente orquestado en **N8N** impulsado por un modelo **Flash de Google**, capaz de razonar sobre métricas aeronáuticas en vivo (Load Factor, RASK, Yield y cumplimiento de cuotas).
+En la presente práctica de laboratorio se abordó el diseño, desarrollo e integración completa de un **Dashboard CRM Comercial y de Revenue Management para una Aerolínea Internacional (AeroLink)**. Esto es una solucion para la toma ágil de decisiones de directores comerciales (*Chief Commercial Officer*) y gestores de rutas (*Route Managers*). La experiencia integró la adopción de un diseño premium tomado de la plataforma **Dribbble**, la construcción reactiva de la interfaz apoyada en los modelos de inteligencia artificial disponibles en el entorno **Antigravity**, y la conexión con un backend inteligente orquestado en **N8N** impulsado por un modelo **Flash de Google**, capaz de razonar sobre métricas aeronáuticas en vivo (Load Factor, RASK, Yield y cumplimiento de cuotas).
 
 ---
 
@@ -35,8 +35,6 @@ Diseñar, implementar y validar un sistema integral de CRM y Revenue Management 
 ---
 
 ## 3. Herramientas y Tecnologías Utilizadas
-
-Para llevar a cabo el proyecto, seleccioné una pila tecnológica moderna orientada a la agilidad de desarrollo, reactividad y rendimiento:
 
 * **Antigravity (Google Advanced Agentic Coding):** Entorno de desarrollo asistido con modelos LLM de última generación (familia Gemini / Flash / Pro) utilizado para la generación, refactorización, auditoría y resolución de código en tiempo real.
 * **Dribbble (Referencia Visual BizLink CRM):** Plataforma de diseño gráfico de donde extraje la arquitectura visual, distribución de tarjetas flotantes, paleta de colores crema/coral y estilo minimalista de presentación ejecutiva.
@@ -75,7 +73,7 @@ El desarrollo de la práctica se estructuró en cuatro fases metodológicas iter
 ```
 
 ### 4.1. Conceptualización del Diseño desde Dribbble y Filosofía Vibecoding
-Como estudiante, inicié el proceso buscando referentes de diseño de clase mundial en **Dribbble**. Seleccioné el concepto **BizLink CRM**, caracterizado por:
+Inicié el proceso buscando referentes de diseño en **Dribbble**. Seleccioné el concepto **BizLink CRM**, caracterizado por:
 * Un fondo cálido en tono crema/hueso (`#F6F4EB`), alejándose del blanco hospitalario estándar.
 * Tarjetas flotantes blancas con sombras sutiles y bordes redondeados (`border-radius: 16px - 20px`).
 * Acentos cromáticos específicos: tono coral/naranja (`#FF6B4A` / `#F97316`) para destacar rutas e interacciones primarias, verde esmeralda (`#10B981`) para éxitos y cumplimiento, y azul cielo (`#3B82F6`) para elementos informativos.
@@ -84,9 +82,9 @@ Como estudiante, inicié el proceso buscando referentes de diseño de clase mund
 Bajo la filosofía de **Vibecoding**, utilicé los modelos de inteligencia artificial disponibles en **Antigravity** para describir la intención funcional y estética en lenguaje natural. En lugar de codificar manualmente cada regla de estilo o estructura de componentes, interactué de forma iterativa con el agente: validé la apariencia en el navegador local (`http://localhost:5173/`), solicité ajustes en la distribución del layout y permití que el modelo propusiera la arquitectura de componentes React más limpia y modular.
 
 ### 4.2. Modelado del Dominio y Reglas de Negocio de la Aerolínea
-Para que el dashboard fuera un sistema realista y no una maqueta estática, analicé y estructuré los requerimientos aeronáuticos documentados en el repositorio de GitHub:
-1. **Reglas de Negocio de la Aerolínea:** Consulté las políticas consignadas en [https://github.com/JoseGG8/FSI_labs/blob/main/lab3/REGLAS_NEGOCIO.md](https://github.com/JoseGG8/FSI_labs/blob/main/lab3/REGLAS_NEGOCIO.md), identificando las tres familias tarifarias (*Light*, *Clásica* y *Flex*), las políticas de equipaje (mano 10 kg, bodega 23 kg, sobrepeso), los tiempos de emisión de billetes (máximo 2 horas antes de expirar reservas) y las reglas de *No-Show* y penalizaciones de rescate.
-2. **Esquemas de Datos B2B:** Modelé las cuatro entidades cardinales del CRM, detalladas en [https://github.com/JoseGG8/FSI_labs/blob/main/lab3/estructura_datos.md](https://github.com/JoseGG8/FSI_labs/blob/main/lab3/estructura_datos.md):
+Para que el dashboard fuera un sistema realista y no una maqueta estática, se tomaron en cuenta las siguientes consideraciones:
+1. **Reglas de Negocio de la Aerolínea:** identificando las tres familias tarifarias (*Light*, *Clásica* y *Flex*), las políticas de equipaje (mano 10 kg, bodega 23 kg, sobrepeso), los tiempos de emisión de billetes (máximo 2 horas antes de expirar reservas) y las reglas de *No-Show* y penalizaciones de rescate.
+2. **Esquemas de Datos B2B:** Cuatro entidades cardinales del CRM, detalladas en [https://github.com/JoseGG8/FSI_labs/blob/main/lab3/estructura_datos.md](https://github.com/JoseGG8/FSI_labs/blob/main/lab3/estructura_datos.md):
    * **Usuarios (Route Managers y Revenue Managers):** 4 gestores con roles, cuota mensual de ventas asignada y hub base (Antony Cárdenas en BOG/MAD, Sandra Perry en Red Global, Jamal Connolly en MIA/Caribe, Cara Carr en MDE/Andina).
    * **Etapas del Pipeline:** 5 fases del ciclo comercial (*Inquiry/Cotización*, *Reserved/Bloqueo Asientos*, *Negotiation/Tarifas Corporativas*, *Closed Won/Vuelo Emitido*, *Closed Lost/Cancelado*).
    * **Clientes B2B:** 10 empresas que adquieren pasajes en bloque (agencias como Viajes El Corte Inglés, OTAs como Expedia y Despegar, corporativos como Banco Santander y operadores de chárters privados como Prime Aviation).
@@ -101,10 +99,10 @@ Junto a Antigravity, codifiqué la estructura de la aplicación en React organiz
   * **Yield (€/RPK):** Ingreso medio por Pasajero-Kilómetro Recorrido, verificando la relación $RASK = Yield \times Load\ Factor$.
   * **Total Flight Revenue, Active Bookings, Win Rate y Avg Booking Size.**
 * **Vistas de Interacción:**
-  * **Pipeline Kanban ([PipelineBoard.jsx](https://github.com/JoseGG8/FSI_labs/blob/main/lab3/src/components/PipelineBoard.jsx)):** Tablero con 4 columnas del ciclo de venta, subtotales por columna y tarjeta VIP en tono oscuro.
-  * **Analítica & Rendimiento ([ChartsSection.jsx](https://github.com/JoseGG8/FSI_labs/blob/main/lab3/src/components/ChartsSection.jsx)):** Gráficos SVG interactivos de barras por etapa, curva de ingresos mensuales vs. cuota, matriz de rutas con verificación de meta IATA y leaderboard de vendedores.
-  * **Registro Tabular ([DealsTable.jsx](https://github.com/JoseGG8/FSI_labs/blob/main/lab3/src/components/DealsTable.jsx)):** Tabla completa con selectores *inline* para cambiar de etapa o marcar como ganado en caliente.
-* **Modales Operativos ([DealModal.jsx](https://github.com/JoseGG8/FSI_labs/blob/main/lab3/src/components/DealModal.jsx) y [DealDetailModal.jsx](https://github.com/JoseGG8/FSI_labs/blob/main/lab3/src/components/DealDetailModal.jsx)):** Diseñé modales para la creación y edición de reservas. Si el usuario ingresa 1 pasajero, el formulario adapta sus campos para solicitar la asignación de asiento unitario (ej. `2A`); al pasar una reserva a estado *Won*, se dispara una animación de confeti mediante `canvas-confetti` y se recalculan al vuelo todas las cifras de la interfaz.
+  * **Pipeline Kanban ([PipelineBoard.jsx](file:///c:/Users/Jose%20Luis%20GIl/Documents/Cursos%202026-2/FSI_labs/lab3/src/components/PipelineBoard.jsx)):** Tablero con 4 columnas del ciclo de venta, subtotales por columna y tarjeta VIP en tono oscuro.
+  * **Analítica & Rendimiento ([ChartsSection.jsx](file:///c:/Users/Jose%20Luis%20GIl/Documents/Cursos%202026-2/FSI_labs/lab3/src/components/ChartsSection.jsx)):** Gráficos SVG interactivos de barras por etapa, curva de ingresos mensuales vs. cuota, matriz de rutas con verificación de meta IATA y leaderboard de vendedores.
+  * **Registro Tabular ([DealsTable.jsx](file:///c:/Users/Jose%20Luis%20GIl/Documents/Cursos%202026-2/FSI_labs/lab3/src/components/DealsTable.jsx)):** Tabla completa con selectores *inline* para cambiar de etapa o marcar como ganado en caliente.
+* **Modales Operativos ([DealModal.jsx](file:///c:/Users/Jose%20Luis%20GIl/Documents/Cursos%202026-2/FSI_labs/lab3/src/components/DealModal.jsx) y [DealDetailModal.jsx](file:///c:/Users/Jose%20Luis%20GIl/Documents/Cursos%202026-2/FSI_labs/lab3/src/components/DealDetailModal.jsx)):** Diseñé modales para la creación y edición de reservas. Si el usuario ingresa 1 pasajero, el formulario adapta sus campos para solicitar la asignación de asiento unitario (ej. `2A`); al pasar una reserva a estado *Won*, se dispara una animación de confeti mediante `canvas-confetti` y se recalculan al vuelo todas las cifras de la interfaz.
 
 ### 4.4. Automatización de Backend y Construcción del Agente de IA con N8N y Gemini Flash
 Para dotar al dashboard de capacidades autónomas, desarrollé un asistente conversacional integrado:
@@ -153,7 +151,7 @@ Como resultado del laboratorio, se obtuvo una plataforma web completamente funci
 
 ## 6. Conclusiones
 
-Desde mi perspectiva como estudiante de ingeniería, el desarrollo de esta práctica de laboratorio me permitió extraer conclusiones fundamentales para mi formación profesional:
+Desde mi perspectiva, el desarrollo de esta práctica de laboratorio me permitió extraer conclusiones fundamentales:
 
 1. **Efectividad del Paradigma Vibecoding:** La asistencia de los modelos de inteligencia artificial en Antigravity revoluciona el ritmo de desarrollo. La capacidad de iterar sobre interfaces complejas mediante lenguaje natural no reemplaza el criterio del ingeniero, sino que potencia su productividad, permitiendo concentrarse en la lógica de dominio, la coherencia de los datos y la experiencia de usuario.
 2. **Importancia del Diseño Basado en Referencias de Calidad:** Tomar como base una referencia visual profesional en Dribbble (BizLink) demostró que el software empresarial no tiene por qué ser árido ni monótono. Incorporar paletas de color estudiadas, sombras cuidadas y micro-interacciones como el confeti al cerrar ventas transforma la percepción del usuario final y eleva el estándar del producto.

@@ -29,6 +29,7 @@ La aplicación estará disponible en `http://localhost:5173/`.
 
 ```
 lab3/
+├── DOCUMENTACION_FUNCIONAL.md   # Manual y Documentación Funcional del Dashboard (Usuario)
 ├── mockData.js                  # Acceso directo para editar datos simulados
 ├── estructura_datos.md          # Especificación de entidades del laboratorio
 ├── package.json                 # Dependencias y scripts

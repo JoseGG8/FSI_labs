@@ -10,6 +10,7 @@ Inspirado con estricta fidelidad en el sistema de diseño **BizLink**: estética
 
 | Documento | Descripción |
 | :--- | :--- |
+| 📑 **[INFORME_LABORATORIO.md](file:///c:/Users/Jose%20Luis%20GIl/Documents/Cursos%202026-2/FSI_labs/lab3/INFORME_LABORATORIO.md)** | **Informe de Laboratorio del Estudiante.** Presentación formal de la práctica, objetivos, metodología Vibecoding, arquitectura Dribbble/Antigravity/N8N y conclusiones. |
 | 📘 **[DOCUMENTACION_FUNCIONAL.md](file:///c:/Users/Jose%20Luis%20GIl/Documents/Cursos%202026-2/FSI_labs/lab3/DOCUMENTACION_FUNCIONAL.md)** | **Manual Funcional Completo desde el punto de vista del usuario.** Guía paso a paso de pantallas, flujos de trabajo (creación, emisión, cancelación), navegación y uso del Copiloto IA. |
 | 📋 **[REGLAS_NEGOCIO.md](file:///c:/Users/Jose%20Luis%20GIl/Documents/Cursos%202026-2/FSI_labs/lab3/REGLAS_NEGOCIO.md)** | **Políticas operativas y tarifarias oficiales de la aerolínea.** Familias tarifarias (Light, Clásica, Flex), políticas de equipaje, check-in, retrasos, no-show, devoluciones e instrucciones de atención al cliente. |
 | 🗄️ **[estructura_datos.md](file:///c:/Users/Jose%20Luis%20GIl/Documents/Cursos%202026-2/FSI_labs/lab3/estructura_datos.md)** | **Modelo de datos y especificación técnica de entidades:** Usuarios/Route Managers, Etapas del Pipeline, Clientes B2B y Oportunidades/Reservas de Vuelo. |
@@ -40,6 +41,7 @@ La aplicación estará disponible en `http://localhost:5173/`.
 
 ```
 lab3/
+├── INFORME_LABORATORIO.md       # Informe de Laboratorio del Estudiante (Práctica 3)
 ├── DOCUMENTACION_FUNCIONAL.md   # Manual y Documentación Funcional del Dashboard (Usuario)
 ├── REGLAS_NEGOCIO.md            # Reglas de negocio, políticas y protocolos de atención
 ├── estructura_datos.md          # Especificación de entidades y esquemas JSON

@@ -94,24 +94,24 @@ Para que el dashboard fuera un sistema realista y no una maqueta estática, anal
 
 ### 4.3. Implementación Frontend y Reactividad en Tiempo Real con Antigravity
 Junto a Antigravity, codifiqué la estructura de la aplicación en React organizada en componentes reutilizables:
-* **Orquestador Principal ([App.jsx](file:///c:/Users/Jose%20Luis%20GIl/Documents/Cursos%202026-2/FSI_labs/lab3/src/App.jsx)):** Mantiene el estado central reactivo, gestionando la lista de tratos, clientes y usuarios. Implementa filtros combinados en tiempo real mediante `useMemo` (búsqueda predictiva, filtrado por etapa, ordenamiento por revenue y filtro por vendedor "Mis Rutas").
-* **Motor Dinámico de Cálculo Aeronáutico ([calculations.js](file:///c:/Users/Jose%20Luis%20GIl/Documents/Cursos%202026-2/FSI_labs/lab3/src/utils/calculations.js)):** Programé funciones puras que calculan sin texto estático:
+* **Orquestador Principal ([App.jsx](https://github.com/JoseGG8/FSI_labs/blob/main/lab3/src/App.jsx)):** Mantiene el estado central reactivo, gestionando la lista de tratos, clientes y usuarios. Implementa filtros combinados en tiempo real mediante `useMemo` (búsqueda predictiva, filtrado por etapa, ordenamiento por revenue y filtro por vendedor "Mis Rutas").
+* **Motor Dinámico de Cálculo Aeronáutico ([calculations.js](https://github.com/JoseGG8/FSI_labs/blob/main/lab3/src/utils/calculations.js)):** Programé funciones puras que calculan sin texto estático:
   * **Load Factor (%):** Asientos vendidos vs. disponibles, comparado frente a la **Meta de Red IATA ≥ 82.0%**.
   * **RASK (€/ASK):** Ingresos por Asiento-Kilómetro Disponible.
   * **Yield (€/RPK):** Ingreso medio por Pasajero-Kilómetro Recorrido, verificando la relación $RASK = Yield \times Load\ Factor$.
   * **Total Flight Revenue, Active Bookings, Win Rate y Avg Booking Size.**
 * **Vistas de Interacción:**
-  * **Pipeline Kanban ([PipelineBoard.jsx](file:///c:/Users/Jose%20Luis%20GIl/Documents/Cursos%202026-2/FSI_labs/lab3/src/components/PipelineBoard.jsx)):** Tablero con 4 columnas del ciclo de venta, subtotales por columna y tarjeta VIP en tono oscuro.
-  * **Analítica & Rendimiento ([ChartsSection.jsx](file:///c:/Users/Jose%20Luis%20GIl/Documents/Cursos%202026-2/FSI_labs/lab3/src/components/ChartsSection.jsx)):** Gráficos SVG interactivos de barras por etapa, curva de ingresos mensuales vs. cuota, matriz de rutas con verificación de meta IATA y leaderboard de vendedores.
-  * **Registro Tabular ([DealsTable.jsx](file:///c:/Users/Jose%20Luis%20GIl/Documents/Cursos%202026-2/FSI_labs/lab3/src/components/DealsTable.jsx)):** Tabla completa con selectores *inline* para cambiar de etapa o marcar como ganado en caliente.
-* **Modales Operativos ([DealModal.jsx](file:///c:/Users/Jose%20Luis%20GIl/Documents/Cursos%202026-2/FSI_labs/lab3/src/components/DealModal.jsx) y [DealDetailModal.jsx](file:///c:/Users/Jose%20Luis%20GIl/Documents/Cursos%202026-2/FSI_labs/lab3/src/components/DealDetailModal.jsx)):** Diseñé modales para la creación y edición de reservas. Si el usuario ingresa 1 pasajero, el formulario adapta sus campos para solicitar la asignación de asiento unitario (ej. `2A`); al pasar una reserva a estado *Won*, se dispara una animación de confeti mediante `canvas-confetti` y se recalculan al vuelo todas las cifras de la interfaz.
+  * **Pipeline Kanban ([PipelineBoard.jsx](https://github.com/JoseGG8/FSI_labs/blob/main/lab3/src/components/PipelineBoard.jsx)):** Tablero con 4 columnas del ciclo de venta, subtotales por columna y tarjeta VIP en tono oscuro.
+  * **Analítica & Rendimiento ([ChartsSection.jsx](https://github.com/JoseGG8/FSI_labs/blob/main/lab3/src/components/ChartsSection.jsx)):** Gráficos SVG interactivos de barras por etapa, curva de ingresos mensuales vs. cuota, matriz de rutas con verificación de meta IATA y leaderboard de vendedores.
+  * **Registro Tabular ([DealsTable.jsx](https://github.com/JoseGG8/FSI_labs/blob/main/lab3/src/components/DealsTable.jsx)):** Tabla completa con selectores *inline* para cambiar de etapa o marcar como ganado en caliente.
+* **Modales Operativos ([DealModal.jsx](https://github.com/JoseGG8/FSI_labs/blob/main/lab3/src/components/DealModal.jsx) y [DealDetailModal.jsx](https://github.com/JoseGG8/FSI_labs/blob/main/lab3/src/components/DealDetailModal.jsx)):** Diseñé modales para la creación y edición de reservas. Si el usuario ingresa 1 pasajero, el formulario adapta sus campos para solicitar la asignación de asiento unitario (ej. `2A`); al pasar una reserva a estado *Won*, se dispara una animación de confeti mediante `canvas-confetti` y se recalculan al vuelo todas las cifras de la interfaz.
 
 ### 4.4. Automatización de Backend y Construcción del Agente de IA con N8N y Gemini Flash
 Para dotar al dashboard de capacidades autónomas, desarrollé un asistente conversacional integrado:
 1. **Configuración del Webhook en N8N:** Configuré en N8N Cloud un trigger de Webhook que escucha solicitudes entrantes por el método `POST` en la URL:
    `https://lab3fsi.app.n8n.cloud/webhook/5581c101-57a2-445d-bd21-08705955f777`.
 2. **Modelo Flash de Google:** En N8N enlacé el trigger a un nodo **AI Agent** configurado con un modelo **Google Gemini Flash**. Este modelo fue seleccionado estratégicamente por su velocidad de procesamiento, reducido consumo de tokens y excelente capacidad de síntesis para responder preguntas de negocio en milisegundos.
-3. **Inyección Dinámica de Contexto (`crmContext`):** Desde el componente React [N8nChatWidget.jsx](file:///c:/Users/Jose%20Luis%20GIl/Documents/Cursos%202026-2/FSI_labs/lab3/src/components/N8nChatWidget.jsx), programé una rutina que en cada mensaje enviado adjunta un payload JSON estructurado con el estado en vivo del CRM:
+3. **Inyección Dinámica de Contexto (`crmContext`):** Desde el componente React [N8nChatWidget.jsx](https://github.com/JoseGG8/FSI_labs/blob/main/lab3/src/components/N8nChatWidget.jsx), programé una rutina que en cada mensaje enviado adjunta un payload JSON estructurado con el estado en vivo del CRM:
    ```json
    {
      "message": "¿Cuál es el Load Factor y qué rutas superan la meta?",

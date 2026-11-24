@@ -12,12 +12,14 @@
 * **Backend (API y Tiempo Real):** [https://ebookstore-server-production.up.railway.app](https://ebookstore-server-production.up.railway.app)
 * **Estado del servicio:** [https://ebookstore-server-production.up.railway.app/health](https://ebookstore-server-production.up.railway.app/health)
 
-**Documentación técnica de apoyo:**
+**Documentación y recursos en GitHub:**
 * **Guía de ejecución y resumen:** [README.md](https://github.com/JoseGG8/FSI_labs/blob/main/lab5/README.md)
 * **Diagrama de arquitectura y justificación:** [ARQUITECTURA.md](https://github.com/JoseGG8/FSI_labs/blob/main/lab5/ARQUITECTURA.md)
 * **Documentación de modelos, API y WebSockets:** [DOCUMENTACION_API.md](https://github.com/JoseGG8/FSI_labs/blob/main/lab5/DOCUMENTACION_API.md)
 * **Auditoría de seguridad:** [AUDITORIA_SEGURIDAD.md](https://github.com/JoseGG8/FSI_labs/blob/main/lab5/AUDITORIA_SEGURIDAD.md)
 * **Documento de requisitos para pruebas (PRD):** [PRD.md](https://github.com/JoseGG8/FSI_labs/blob/main/lab5/PRD.md)
+* **Plantilla de variables de entorno (sin secretos):** [.env.example](https://github.com/JoseGG8/FSI_labs/blob/main/lab5/.env.example)
+* **Código fuente:** [Frontend (`web/`)](https://github.com/JoseGG8/FSI_labs/tree/main/lab5/web) · [Backend (`server/`)](https://github.com/JoseGG8/FSI_labs/tree/main/lab5/server)
 
 ---
 
@@ -129,10 +131,20 @@ Posteriormente se elaboró el archivo `PRD.md` describiendo las rutas, roles, cr
 
 ### 5.1. Aplicación funcional en producción
 La plataforma quedó desplegada y operativa en Railway con soporte HTTPS y WebSockets seguros:
-* **Catálogo público (`/`):** carga los 8 libros iniciales, permite filtrar por categoría, disponibilidad y orden, y oculta las rutas de descarga al público.
-* **Carrito y checkout (`/carrito`):** reserva inventario en servidor, integra los botones de PayPal Sandbox y libera las descargas únicamente tras validar la captura del pago.
-* **Mis Libros (`/pedidos`):** muestra el historial propio del cliente, bloquea descargas en pedidos pendientes y refleja en vivo los cambios de estado hechos por el administrador.
-* **Panel administrativo (`/admin`):** accesible solo para administradores, muestra indicadores de ventas, recibe nuevos pedidos en tiempo real, permite cambiar el estado de envío y editar o agregar eBooks al catálogo.
+
+| Vista / Recurso | Ruta en producción | Función principal |
+| :--- | :--- | :--- |
+| **Catálogo público** | [https://ebookstore-web-production-b30982b2.up.railway.app/](https://ebookstore-web-production-b30982b2.up.railway.app/) | Exploración de eBooks, búsqueda sin distinción de tildes, filtros por categoría y disponibilidad. |
+| **Inicio de sesión y registro** | [https://ebookstore-web-production-b30982b2.up.railway.app/auth](https://ebookstore-web-production-b30982b2.up.railway.app/auth) | Acceso de clientes/administradores y registro público de nuevos clientes. |
+| **Carrito y pago PayPal** | [https://ebookstore-web-production-b30982b2.up.railway.app/carrito](https://ebookstore-web-production-b30982b2.up.railway.app/carrito) | Resumen del pedido, reserva de inventario en servidor y pago con PayPal Sandbox. |
+| **Mis Libros / Pedidos** | [https://ebookstore-web-production-b30982b2.up.railway.app/pedidos](https://ebookstore-web-production-b30982b2.up.railway.app/pedidos) | Historial del cliente, seguimiento en vivo del envío y descargas habilitadas solo tras pago confirmado. |
+| **Panel administrativo** | [https://ebookstore-web-production-b30982b2.up.railway.app/admin](https://ebookstore-web-production-b30982b2.up.railway.app/admin) | Gestión de pedidos en tiempo real, cambio de estado de envío y administración de stock/catálogo. |
+| **API pública de catálogo** | [https://ebookstore-server-production.up.railway.app/api/books](https://ebookstore-server-production.up.railway.app/api/books) | Consulta REST del catálogo (oculta los enlaces de descarga). |
+| **Monitoreo del servidor** | [https://ebookstore-server-production.up.railway.app/health](https://ebookstore-server-production.up.railway.app/health) | Verificación en vivo del servidor y la conexión a MongoDB Atlas. |
+
+**Cuentas de demostración disponibles para evaluación:**
+* **Cliente:** `cliente@ebookstore.com` / `Cliente123!`
+* **Administrador:** `admin@ebookstore.com` / `Admin123!`
 
 ### 5.2. Resultados de pruebas automatizadas (TestSprite)
 

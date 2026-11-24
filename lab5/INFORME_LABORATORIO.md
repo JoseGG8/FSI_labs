@@ -148,6 +148,8 @@ En la ejecución completa de la suite de pruebas sobre la aplicación desplegada
 | **Pruebas bloqueadas** | **0** |
 | **Tasa de aprobación** | **92%** |
 
+![Evidencia de ejecución de la suite en TestSprite](./evidencias/testsprite-resultados.png)
+
 * **Defecto detectado y corregido:** el único caso fallido ocurrió al buscar la palabra `"ingenieria"` sin tilde en el catálogo, pues no coincidía con el título `"Ingeniería de Prompts y Agentes de IA en Producción"`. Se corrigió el buscador en el backend para que ignore tildes y diferencias de `ñ` tanto en título, autor y descripción como en categoría, se redesplegó en Railway y se comprobó directamente en producción que búsquedas como `ingenieria`, `sofia` y `castano` ya devuelven los resultados esperados.
 
 ### 5.3. Limitaciones conocidas

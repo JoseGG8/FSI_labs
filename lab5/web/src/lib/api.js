@@ -1,10 +1,22 @@
-export const API_URL =
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') || 'http://localhost:4000';
+function normalizeBaseUrl(raw, fallback) {
+  const trimmed = (raw || '').trim().replace(/\/$/, '');
+  if (!trimmed) return fallback;
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  const protocol = /^localhost(:\d+)?$/i.test(trimmed) ? 'http://' : 'https://';
+  return `${protocol}${trimmed}`;
+}
 
-export const SOCKET_URL =
-  process.env.NEXT_PUBLIC_SOCKET_URL?.replace(/\/$/, '') || API_URL;
+export const API_URL = normalizeBaseUrl(
+  process.env.NEXT_PUBLIC_API_URL,
+  'http://localhost:4000'
+);
 
-export const PAYPAL_CLIENT_ID = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || '';
+export const SOCKET_URL = normalizeBaseUrl(
+  process.env.NEXT_PUBLIC_SOCKET_URL,
+  API_URL
+);
+
+export const PAYPAL_CLIENT_ID = (process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || '').trim();
 
 export async function apiRequest(path, { method = 'GET', body, token, headers = {} } = {}) {
   const finalHeaders = {

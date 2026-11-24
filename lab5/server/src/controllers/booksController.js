@@ -5,6 +5,24 @@ function escapeRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+function buildAccentInsensitiveRegex(value) {
+  const normalized = value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .trim();
+  const escaped = escapeRegex(normalized);
+  const accentMap = {
+    a: '[aáàäâ]',
+    e: '[eéèëê]',
+    i: '[iíìïî]',
+    o: '[oóòöô]',
+    u: '[uúùüû]',
+    n: '[nñ]'
+  };
+  const pattern = escaped.replace(/[aeioun]/gi, (ch) => accentMap[ch.toLowerCase()] || ch);
+  return new RegExp(pattern, 'i');
+}
+
 function serializeBook(bookDoc, isAdmin) {
   const obj = bookDoc.toJSON ? bookDoc.toJSON() : { ...bookDoc };
   if (!isAdmin) {
@@ -19,8 +37,8 @@ export async function listBooks(req, res, next) {
     const filter = {};
 
     if (q && typeof q === 'string' && q.trim()) {
-      const regex = new RegExp(escapeRegex(q.trim()), 'i');
-      filter.$or = [{ title: regex }, { author: regex }, { description: regex }];
+      const regex = buildAccentInsensitiveRegex(q.trim());
+      filter.$or = [{ title: regex }, { author: regex }, { description: regex }, { category: regex }];
     }
 
     if (category && typeof category === 'string' && category.trim() && category !== 'all') {

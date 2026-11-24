@@ -40,12 +40,14 @@ const bookSchema = new mongoose.Schema(
     coverImageUrl: {
       type: String,
       required: [true, 'La URL de portada es obligatoria'],
-      trim: true
+      trim: true,
+      match: [/^https?:\/\/.+/i, 'La URL de portada debe iniciar con http:// o https://']
     },
     downloadUrl: {
       type: String,
       required: [true, 'La URL de descarga del eBook es obligatoria'],
-      trim: true
+      trim: true,
+      match: [/^https?:\/\/.+/i, 'La URL de descarga debe iniciar con http:// o https://']
     },
     format: {
       type: String,
